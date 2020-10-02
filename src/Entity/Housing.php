@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\HousingRepository;
+<<<<<<< HEAD
+=======
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+>>>>>>> 0ab96d1acdb706e1657912bf9e86be8e82eeddc8
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -65,6 +70,19 @@ class Housing
      */
     private $status;
 
+<<<<<<< HEAD
+=======
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="housing", orphanRemoval=true)
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
+
+>>>>>>> 0ab96d1acdb706e1657912bf9e86be8e82eeddc8
     public function getId(): ?int
     {
         return $this->id;
@@ -177,4 +195,47 @@ class Housing
 
         return $this;
     }
+<<<<<<< HEAD
+=======
+
+    public function __toString()
+    {
+        return $this->getType()->getName() . ' ' . 
+            $this->getRoomCount() . ' rooms ' . 
+            $this->getFloorArea() . 'm² ' . 
+            $this->getPrice() . '€ ' . 
+            $this->getAddress()->getCity();
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setHousing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getHousing() === $this) {
+                $image->setHousing(null);
+            }
+        }
+
+        return $this;
+    }
+>>>>>>> 0ab96d1acdb706e1657912bf9e86be8e82eeddc8
 }

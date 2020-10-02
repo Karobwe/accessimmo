@@ -81,4 +81,12 @@ class Type
 
         return $this;
     }
+<<<<<<< HEAD
+=======
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
+>>>>>>> 0ab96d1acdb706e1657912bf9e86be8e82eeddc8
 }
