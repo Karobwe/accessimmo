@@ -2,11 +2,6 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Address;
-use App\Entity\Housing;
-use App\Entity\Image;
-use App\Entity\Status;
-use App\Entity\Type;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -20,8 +15,7 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        // return parent::index();
-        return $this->render('admin/index.html.twig');
+        return parent::index();
     }
 
     public function configureDashboard(): Dashboard
@@ -33,18 +27,6 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        
-        yield MenuItem::section('Gestion', 'fa fa-dolly-flatbed');
-        yield MenuItem::linkToCrud('Types', 'fa fa-cogs', Type::class);
-        yield MenuItem::linkToCrud('Status', 'fa fa-fan', Status::class);
-        yield MenuItem::linkToCrud('Adresse', 'fa fa-map-marked', Address::class);
-        yield MenuItem::linkToCrud('Images', 'fa fa-image', Image::class);
-        yield MenuItem::linkToCrud('Logements', 'fa fa-city', Housing::class);
-
-        yield MenuItem::section('Utilisateurs', 'fa fa-dolly-flatbed');
-
-        yield MenuItem::section('Développeurs');
-        yield MenuItem::linkToUrl('Dashboard doc', null, 'https://symfony.com/doc/current/bundles/EasyAdminBundle/dashboards.html');
-        yield MenuItem::linkToUrl('CRUD doc', null, 'https://symfony.com/doc/current/bundles/EasyAdminBundle/crud.html');
+        // yield MenuItem::linkToCrud('The Label', 'icon class', EntityClass::class);
     }
 }
