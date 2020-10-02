@@ -73,8 +73,7 @@ class Housing
     private $images;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="Housing")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="housing")
      */
     private $user;
 
