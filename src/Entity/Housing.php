@@ -3,11 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HousingRepository;
-<<<<<<< HEAD
-=======
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
->>>>>>> 0ab96d1acdb706e1657912bf9e86be8e82eeddc8
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,8 +67,6 @@ class Housing
      */
     private $status;
 
-<<<<<<< HEAD
-=======
     /**
      * @ORM\OneToMany(targetEntity=Image::class, mappedBy="housing", orphanRemoval=true)
      */
@@ -82,7 +77,6 @@ class Housing
         $this->images = new ArrayCollection();
     }
 
->>>>>>> 0ab96d1acdb706e1657912bf9e86be8e82eeddc8
     public function getId(): ?int
     {
         return $this->id;
@@ -195,8 +189,6 @@ class Housing
 
         return $this;
     }
-<<<<<<< HEAD
-=======
 
     public function __toString()
     {
@@ -237,5 +229,4 @@ class Housing
 
         return $this;
     }
->>>>>>> 0ab96d1acdb706e1657912bf9e86be8e82eeddc8
 }
