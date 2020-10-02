@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HousingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -64,6 +66,16 @@ class Housing
      * @ORM\JoinColumn(nullable=false)
      */
     private $status;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="housing", orphanRemoval=true)
+     */
+    private $images;
+
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -185,5 +197,36 @@ class Housing
             $this->getFloorArea() . 'm² ' . 
             $this->getPrice() . '€ ' . 
             $this->getAddress()->getCity();
+    }
+
+    /**
+     * @return Collection|Image[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setHousing($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getHousing() === $this) {
+                $image->setHousing(null);
+            }
+        }
+
+        return $this;
     }
 }
