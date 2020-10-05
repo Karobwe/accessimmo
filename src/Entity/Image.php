@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=ImageRepository::class)
+ * @Vich\Uploadable()
  */
 class Image
 {
@@ -33,6 +35,25 @@ class Image
      */
     private $housing;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
+    /**
+     * @Vich\UploadableField(mapping="housing_images", fileNameProperty="url")
+     */
+    private $imageFile;
+
+    /**
+     * Image constructor.
+     */
+    public function __construct()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -43,7 +64,7 @@ class Image
         return $this->url;
     }
 
-    public function setUrl(string $url): self
+    public function setUrl($url): self
     {
         $this->url = $url;
 
@@ -74,8 +95,43 @@ class Image
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * @param mixed $imageFile
+     */
+    public function setImageFile($imageFile): void
+    {
+        $this->imageFile = $imageFile;
+
+        if($imageFile) {
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
     public function __toString()
     {
-        return pathinfo($this->getUrl()['filename']) . pathinfo($this->getUrl()['extension']);
+        $cleanedUrl = explode('?',$this->getUrl());
+        $cleanedUrl = $cleanedUrl[0];
+        $filename = pathinfo($cleanedUrl)['filename'] . '' . pathinfo($cleanedUrl)['extension'];
+        return $filename;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 }

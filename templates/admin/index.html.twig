@@ -1,12 +1,9 @@
-{% extends '@EasyAdmin/welcome.html.twig' %}
+{% extends '@!EasyAdmin/layout.html.twig' %}
 
 {% block head_stylesheets %}
-        {# On garde les block d'origine avant de rajouter d'autres fonctionnalités #}
         {{ parent() }}
+        {# On étends les CSS du parent avant d'ajouter les nôtres #}
 
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
 {% endblock %}
 
-{% block page_content %}
-
-{% endblock %}
