@@ -14,3 +14,10 @@
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+
+###> IDE's configs
+.vscode/*
+.idea/*
+
+###> Uploaded files
+public/uploads

@@ -4,11 +4,9 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -20,58 +18,42 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, [
+                'label' => 'Votre adresse email',
+                'attr' => [
+                    'placeholder' => 'Champs requis'
+                ]
+            ])
             ->add('firstName', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Champ de formulaire invalide !',
-                    ]),
-                ],
+                'label' => 'Votre prénom',
+                'attr' => [
+                    'placeholder' => 'Champs requis'
+                ]
             ])
             ->add('lastName', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Champ de formulaire invalide !',
-                    ]),
-                ],
+                'label' => 'Votre nom de famille',
+                'attr' => [
+                    'placeholder' => 'Champs requis'
+                ]
             ])
-            
+    
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Veuillez entrer un mot de passe',
                     ]),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'min' => 8,
+                        'minMessage' => 'Le mot de passe doit contenir au moins {{ limit }} caractères',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
                 ],
             ])
-            ->add('adress', TextType::class, [
-                'constraints' => [
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Champ de formulaire invalide !',
-                    ]),
-                ],
-            ])
-            ->add('phone', NumberType::class, [
-                'constraints' => [
-                    new Length([
-                        'min' => 10,
-                        'minMessage' => 'Champ de formulaire invalide !',
-                    ]),
-                ],
-            ])
-            
-            ->add('save', SubmitType::class)
         ;
     }
 

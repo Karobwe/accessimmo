@@ -8,8 +8,36 @@
         <div class="collapse navbar-collapse" id="toggleNavbar">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('housing_index') }}">Trouver un logement</a>
+                    <a class="nav-link active" href="{{ path('housing_index') }}">Trouver un logement</a>
                 </li>
+                <li class="nav-item active">
+					{% if app.user %}
+						<li class="nav-item dropdown">
+							 <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fa fa-user mr-1" aria-hidden="true"></i>
+								Utilisateur
+                                </a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="{{ path('app_logout') }}">Mon Profile</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
+								</div>
+							</div>
+						{% else %}
+							<li class="nav-item dropdown">
+							 <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="fa fa-user mr-1" aria-hidden="true"></i>
+								Utilisateur
+                                </a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<a class="dropdown-item" href="{{ path('app_register') }}">Nouveau utilisateur</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="{{ path('app_login') }}">Connexion</a>
+								</div>
+							</div>
+						{% endif %}
+					</li>
+				</li>
             </ul>
         </div>
     </nav>

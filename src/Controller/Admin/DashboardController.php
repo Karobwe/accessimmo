@@ -7,6 +7,7 @@ use App\Entity\Housing;
 use App\Entity\Image;
 use App\Entity\Status;
 use App\Entity\Type;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -28,6 +29,14 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle('Accessimmo');
+    }
+
+    public function configureCrud(): Crud
+    {
+        return Crud::new()
+            ->overrideTemplates([
+                'layout' => 'admin/index.html.twig'
+            ]);
     }
 
     public function configureMenuItems(): iterable

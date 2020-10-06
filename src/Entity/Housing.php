@@ -74,12 +74,30 @@ class Housing
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="housing")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
     public function __construct()
     {
         $this->images = new ArrayCollection();
+    }
+
+    public function getPreview()
+    {
+        if($this->getImages()->isEmpty()) return 'https://www.flaticon.com/svg/static/icons/svg/2924/2924661.svg';
+
+        return $this->getImages()->first()->getUrl();
+    }
+
+    public function getClassification() {
+        switch($this->getBedroomCount()) {
+            case 1:
+                return 'Studio';
+                break;
+            default:
+                return 'T' . $this->getBedroomCount();
+        }
     }
 
     public function getId(): ?int

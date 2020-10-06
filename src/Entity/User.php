@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -38,28 +39,65 @@ class User implements UserInterface
      */
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=60)
+   /**
+     * @ORM\Column(type="string", length=32)
+     * @Assert\Length(
+         min = 2,
+         minMessage = "Votre prénom doit comporter au moins {{ limit }} caractères.",
+         max = 32,
+         minMessage = "Votre prénom ne doit pas comporter plus de {{ limit }} caractères.",
+         allowEmptyString = false
+     )
      */
-    private $firstName;
+    private $firstname;
+
+   /**
+     * @ORM\Column(type="string", length=36)
+     * @Assert\Length(
+         min = 2,
+         minMessage = "Votre nom doit comporter au moins {{ limit }} caractères.",
+         max = 36,
+         minMessage = "Votre nom ne doit pas comporter plus de {{ limit }} caractères.",
+         allowEmptyString = false
+     )
+     */
+    private $lastname;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $lastName;
+    private $address;
+
+    
+    /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     * @Assert\Length(
+         min = 2,
+         minMessage = "Votre ville doit comporter au moins {{ limit }} caractères.",
+         max = 180,
+         minMessage = "Votre ville ne doit pas comporter plus de {{ limit }} caractères.",
+         allowEmptyString = false
+     )
+     */
+    private $city;
 
     /**
-     * @ORM\Column(type="string", length=12)
+     * @ORM\Column(type="string", length=5, nullable=true)
+     */
+    private $zipCode;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $phone;
 
     /**
-     * @ORM\Column(type="string", length=60)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $adress;
+    private $avatar;
 
     /**
-     * @ORM\OneToMany(targetEntity=Housing::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Housing::class, mappedBy="user", orphanRemoval=true)
      */
     private $housing;
 
@@ -146,26 +184,62 @@ class User implements UserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstName(): ?string
+    public function getFirstname(): ?string
     {
-        return $this->firstName;
+        return $this->firstname;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstname(string $firstname): self
     {
-        $this->firstName = $firstName;
+        $this->firstname = $firstname;
 
         return $this;
     }
 
-    public function getLastName(): ?string
+    public function getLastname(): ?string
     {
-        return $this->lastName;
+        return $this->lastname;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(string $lastname): self
     {
-        $this->lastName = $lastName;
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    public function getAddress(): ?string
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?string $address): self
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(?string $city): self
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getZipCode(): ?string
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(?string $zipCode): self
+    {
+        $this->zipCode = $zipCode;
 
         return $this;
     }
@@ -181,15 +255,15 @@ class User implements UserInterface
 
         return $this;
     }
-
-    public function getAdress(): ?string
+    
+    public function getAvatar(): ?string
     {
-        return $this->adress;
+        return $this->avatar;
     }
 
-    public function setAdress(string $adress): self
+    public function setAvatar(?string $avatar): self
     {
-        $this->adress = $adress;
+        $this->avatar = $avatar;
 
         return $this;
     }
