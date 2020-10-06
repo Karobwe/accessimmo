@@ -52,6 +52,9 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::section('Utilisateurs', 'fa fa-dolly-flatbed');
 
+        yield MenuItem::section('----------------', null);
+        yield MenuItem::linktoRoute('Accueil', null, 'home');
+
         yield MenuItem::section('Développeurs');
         yield MenuItem::linkToUrl('Dashboard doc', null, 'https://symfony.com/doc/current/bundles/EasyAdminBundle/dashboards.html');
         yield MenuItem::linkToUrl('CRUD doc', null, 'https://symfony.com/doc/current/bundles/EasyAdminBundle/crud.html');

@@ -30,7 +30,7 @@ class Image
     private $alt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Housing::class, inversedBy="images")
+     * @ORM\ManyToOne(targetEntity=Housing::class, inversedBy="images",cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $housing;
@@ -119,8 +119,16 @@ class Image
     {
         $cleanedUrl = explode('?',$this->getUrl());
         $cleanedUrl = $cleanedUrl[0];
-        $filename = pathinfo($cleanedUrl)['filename'] . '' . pathinfo($cleanedUrl)['extension'];
-        return $filename;
+        if(isset(pathinfo($cleanedUrl)['filename'])) {
+            $filename = pathinfo($cleanedUrl)['filename'];
+
+            if(isset(pathinfo($cleanedUrl)['extension'])) {
+                $filename = $filename . '.' . pathinfo($cleanedUrl)['extension'];
+            }
+            return $filename;
+        }
+
+        return $this->getUrl();
     }
 
     public function getUpdatedAt(): ?\DateTimeInterface

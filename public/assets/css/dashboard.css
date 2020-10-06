@@ -51,6 +51,11 @@ body {
     color: var(--info) !important;
 }
 
-.sidebar-menu li:not(.header) {
-    /* margin-left: .7rem; */
+.sidebar-menu li:not(.header) i.menu-icon {
+    /*color: var(--success) !important;*/
+}
+
+.sidebar-menu li.active a > span,
+.sidebar-menu li.active i.menu-icon {
+    color: var(--secondary) !important;
 }

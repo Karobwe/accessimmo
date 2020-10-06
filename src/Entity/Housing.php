@@ -68,7 +68,7 @@ class Housing
     private $status;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="housing", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="housing", orphanRemoval=true, cascade={"persist"})
      */
     private $images;
 
