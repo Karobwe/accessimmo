@@ -8,7 +8,30 @@
 {% block content %}
     <div id="home-header" class="jumbotron jumbotron-fluid">
         <div class="container">
-            {{ render(controller('App\\Controller\\SearchController::searchBar')) }}
+            <div class="d-flex flex-column align-content-center justify-content-center">
+                <div class="row">
+                    <div class="col col-md-6">
+                        <p class="h3 text-white text-lg-center">Trouver le logement qui vous corrsspond</p>
+                    </div>
+                    <div class="col col-md-6">
+                        {{ render(controller('App\\Controller\\SearchController::searchBar')) }}
+                    </div>
+                </div>
+
+                <div class="mt-5">
+                    <p class="text-left">
+                        <button class="btn btn-outline-light btn-lg rounded-0" type="button" data-toggle="collapse" data-target="#adcancedSearch">
+                            Recherche avancée
+                        </button>
+                    </p>
+                    {# TODO  Ajouter la classe "collapse" à la div ci-dessous pour par défaut cacher le formulaire #}
+                    <div class="" id="adcancedSearch">
+                        <div class="card card-body">
+                            {{ render(controller('App\\Controller\\SearchController::advancedSearch')) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

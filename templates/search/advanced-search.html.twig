@@ -1,0 +1,41 @@
+<form>
+    <div class="col">
+        <div class="row">
+            <div class="input-group col col-md-6">
+                <div class="input-group-prepend pl-0 col-12">
+                    <label class="input-group-label" for="types">Vous êtes intéréssés par un(e)</label>
+                </div>
+                <select class="custom-select col-12" id="types">
+                    <option value="all" selected>maison, appartement...</option>
+                    {% for type in allTypes %}
+                        <option value="{{ type.name }}">{{ type.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="input-group col col-md-6">
+                <div class="input-group-prepend pl-0 col-12">
+                    <label class="input-group-label" for="types">Vous voulez</label>
+                </div>
+                <select class="custom-select col-12" id="types">
+                    <option value="all" selected>acheter, louer...</option>
+                    {% for status in allStatus %}
+                        <option value="{{ status.name }}">{{ status.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="form-group col col-md-6">
+                <label for="priceControlRange">Votre budget</label>
+                <div class="row">
+                    <input type="range" min="0" max="1000000" step="1" class="form-control-range custom-range col-7" id="priceControlRange">
+                    <input type="text" class="custom-control col-4 ml-3" id="priceControlRangeValue">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 mt-5">{{ dump() }}</div>
+</form>

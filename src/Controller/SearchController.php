@@ -3,9 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Housing;
+use App\Entity\Status;
+use App\Entity\Type;
 use App\Repository\HousingRepository;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +59,20 @@ class SearchController extends AbstractController
         return $this->render(
             'search/results.html.twig',
             ['results' => $houseList]
+        );
+    }
+
+    public function advancedSearch()
+    {
+        $allTypes = $this->getDoctrine()->getRepository(Type::class)->findAll();
+        $allStatus = $this->getDoctrine()->getRepository(Status::class)->findAll();
+
+        return $this->render(
+            'search/advanced-search.html.twig',
+            [
+                'allTypes' => $allTypes,
+                'allStatus' => $allStatus
+            ]
         );
     }
 }
