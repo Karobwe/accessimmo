@@ -16,7 +16,10 @@ class UserType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('phone')
-            ->add('adress')
+            ->add('address')
+            ->add('city')
+            ->add('zipCode')
+
         ;
     }
 
