@@ -3,22 +3,23 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-
-    <div class="container">
-        <h1 class="text-center mt-3">Modification du profile utilisateur</h1>
-         {% for message in app.flashes('success') %}
-            <div class="alert alert-success">
-                {{ message }}
+<div class="container">
+    <div class="row">
+        <div class="col-10 mt-5">
+            <div class="card-body bg-light">
+                    <h1 class="text-center mt-3">Modification du profile utilisateur</h1>
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {{ form_start(from) }}
+                    {{ form_widget(from) }}
+                    <input type="submit" class="btn btn-primary" value="Enregistrer les modifications">
+                    {{ form_end(from) }}
             </div>
-        {% endfor %}
-        {{ form_start(from) }}
-        {{ form_widget(from) }}
-        
-
-
-    <button type="submit" class="btn btn-primary"> Enregistrer les modifications<button>
-        {{ form_end(from) }}
-
+        </div>
     </div>
+</div>
 
 {% endblock %}
