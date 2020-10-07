@@ -75,7 +75,7 @@ class AppFixtures extends Fixture
         $avGare
             ->setStreet('Avenue de la Gare')
             ->setPostCode(21110)
-            ->setCity('Genlis');
+            ->setCity('Auxerre');
         $manager->persist($avGare);
 
         $bvPasteur = new Address();
@@ -87,8 +87,6 @@ class AppFixtures extends Fixture
 
         $address = array($rueSully, $rueMirande, $avGare, $bvPasteur);
 
-        // -*-*-*-*-*-*-*--*-*- Image -*-*-*-*-*-*-*--*-*-
-
         // -*-*-*-*-*-*-*--*-*- Housing -*-*-*-*-*-*-*--*-*-
         for($i = 0; $i < 100; $i++) {
             $housing = new Housing();
@@ -99,10 +97,18 @@ class AppFixtures extends Fixture
             $housing->setRoomCount($this->faker->numberBetween(1, 8));
             $housing->setBedroomCount($this->faker->numberBetween(1, $housing->getRoomCount()));
 
-            if($housing->getType() ->getName()== 'A louer') {
-                $housing->setPrice($this->faker->numberBetween(200, 1000));
+            if($housing->getStatus()->getName() == 'A louer') {
+                if($housing->getType()->getName() == 'Maison') {
+                    $housing->setPrice($this->faker->numberBetween(700, 2500));
+                }  else {
+                    $housing->setPrice($this->faker->numberBetween(200, 1500));
+                }
             } else {
-                $housing->setPrice($this->faker->numberBetween(50000, 500000));
+                if($housing->getType() == 'Maison') {
+                    $housing->setPrice($this->faker->numberBetween(100000, 500000));
+                } else {
+                    $housing->setPrice($this->faker->numberBetween(75000, 300000));
+                }
             }
 
             $housing->setShortDescription(
@@ -114,7 +120,9 @@ class AppFixtures extends Fixture
             );
 
             $housing->setDescription($this->faker->realText(1000));
+            $housing->setUpdatedAt(new \DateTime($this->faker->dateTimeThisYear('NOW', new \DateTimeZone('Europe/Paris'))));
 
+            // -*-*-*-*-*-*-*--*-*- Image -*-*-*-*-*-*-*--*-*-
             for($j = 0; $j < 5; $j++) {
                 $img = new Image();
                 $img->setUrl($this->faker->imageUrl(640, 450, 'city'));

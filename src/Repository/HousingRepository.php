@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Housing;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Housing|null find($id, $lockMode = null, $lockVersion = null)
@@ -17,6 +19,34 @@ class HousingRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Housing::class);
+    }
+
+    /**
+     * @return Housing[] Returns an array of Housing objects
+     */
+    public function findByTerm($value)
+    {
+        $qb =  $this->createQueryBuilder('h');
+        $qb
+            ->join('App\Entity\Type', 't', Join::WITH, 't = h.type')
+            ->join('App\Entity\Status', 's', Join::WITH, 's = h.status')
+            ->join('App\Entity\Address', 'a', Join::WITH, 'a = h.address')
+            ->where(
+                $qb->expr()->orX(
+                    $qb->expr()->like('LOWER(h.shortDescription)', ':term'),
+                    $qb->expr()->like('LOWER(h.description)', ':term'),
+                    $qb->expr()->like('LOWER(t.name)', ':term'),
+                    $qb->expr()->like('LOWER(s.name)', ':term'),
+                    $qb->expr()->like('LOWER(a.city)', ':term')
+                )
+            )
+            ->setParameter('term', '%' . strtolower($value) . '%')
+            ->orderBy('h.updatedAt', 'ASC');
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     // /**

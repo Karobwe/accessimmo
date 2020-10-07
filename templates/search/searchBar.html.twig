@@ -1,0 +1,41 @@
+{{ form_start(
+    form,
+    {
+        'method': 'POST',
+        'attr': {
+            'class': 'form-inline'
+        }
+    }
+) }}
+    {# {{ form_label(form.query) }} #}
+    {{
+        form_widget(
+            form.query,
+            {
+                'attr': {
+                    'placeholder': 'Recherche...',
+                    'class': 'form-control form-control-lg'
+                }
+            }
+        )
+    }}
+
+    {#{{
+        form_widget(
+            form.submit,
+            {
+                'label': '<ion-icon name="aze"></ion-icon>',
+                'attr': {
+                    'class': 'btn btn-primary rounded-0 btn-lg'
+                }
+            }
+        )
+    }}#}
+    <button
+            type="submit"
+            id="form_submit"
+            name="form[submit]"
+            class="btn btn-primary form-control form-control-lg rounded-0 btn-lg">
+        <ion-icon name="search-sharp"></ion-icon>
+    </button>
+{{ form_end(form) }}

@@ -72,6 +72,11 @@ class Housing
      */
     private $images;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -243,6 +248,25 @@ class Housing
                 $image->setHousing(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     * @param \DateTimeInterface $updatedAt
+     * @return $this
+     */
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        if(!$updatedAt) $updatedAt = new \DateTime();
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

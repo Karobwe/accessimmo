@@ -1,3 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{# TODO: personaliser cette page #}
+{% block head %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div id="home-header" class="jumbotron jumbotron-fluid">
+        <div class="container">
+            {{ render(controller('App\\Controller\\SearchController::searchBar')) }}
+        </div>
+    </div>
+{% endblock %}
