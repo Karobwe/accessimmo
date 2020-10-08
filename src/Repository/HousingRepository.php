@@ -49,6 +49,83 @@ class HousingRepository extends ServiceEntityRepository
         ;
     }
 
+    /**
+     * @return Housing[] Returns an array of Housing objects
+     */
+    public function advancedSearch($queryData)
+    {
+        dump($queryData);
+        $qb =  $this->createQueryBuilder('h');
+        $queryParameters = [];
+
+        $qb
+            ->join('App\Entity\Type', 't', Join::WITH, 't = h.type')
+            ->join('App\Entity\Status', 's', Join::WITH, 's = h.status')
+            ->join('App\Entity\Address', 'a', Join::WITH, 'a = h.address');
+
+        if(!empty($queryData['keywords']))
+        {
+            $keywords = $queryData['keywords'];
+            for($i = 0; $i < count($keywords); $i++) {
+                $paramValue = strtolower($keywords[$i]);
+                $paramName = ":word" . $i;
+                $qb->orWhere(
+                    $qb->expr()->orX(
+                        $qb->expr()->like('LOWER(h.shortDescription)', $paramName),
+                        $qb->expr()->like('LOWER(h.description)', $paramName),
+                        $qb->expr()->like('LOWER(a.city)', $paramName)
+                    )
+                );
+
+                $queryParameters['word' . $i] = '%' . $paramValue . '%';
+            }
+        }
+
+        if($queryData['typeId']) {
+            $typeId = intval($queryData['typeId']);
+            $qb->orWhere(
+                $qb->where('h.type_id = :typeId')
+            );
+            $queryParameters['typeId'] = $typeId;
+        }
+
+        if($queryData['statusId']) {
+            $statusId = intval($queryData['statusId']);
+            $qb->orWhere(
+                $qb->where('h.status = :statusId')
+            );
+            $queryParameters['statusId'] = $statusId;
+        }
+
+        $minPrice = $queryData['price']['min'];
+        $maxPrice = $queryData['price']['max'];
+        $minArea = $queryData['area']['min'];
+        $maxArea = $queryData['area']['max'];
+        $qb->orWhere(
+            $qb->expr()->orX(
+                $qb->expr()->between('h.price', $minPrice, $maxPrice),
+                $qb->expr()->between('h.floorArea', $minArea, $maxArea)
+            )
+        );
+
+        if($queryData['sizes']) {
+            foreach ($queryData['sizes'] as $key => $value) {
+                $qb->orWhere(
+                    $qb->expr()->eq('h.bedroomCount', $value)
+                );
+            }
+        }
+
+        $qb->setParameters($queryParameters);
+        $qb->orderBy('h.updatedAt', 'ASC');
+        //dd($qb->getQuery());
+
+        return $qb
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Housing[] Returns an array of Housing objects
     //  */

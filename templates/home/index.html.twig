@@ -19,15 +19,24 @@
                 </div>
 
                 <div class="mt-5">
-                    <p class="text-left">
-                        <button class="btn btn-outline-light btn-lg rounded-0" type="button" data-toggle="collapse" data-target="#adcancedSearch">
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-outline-light btn-lg rounded-0 mx-2 mb-3" type="button" data-toggle="collapse" data-target="#advancedSearch">
                             Recherche avancée
                         </button>
-                    </p>
-                    {# TODO  Ajouter la classe "collapse" à la div ci-dessous pour par défaut cacher le formulaire #}
-                    <div class="" id="adcancedSearch">
+
+                        <button class="btn btn-outline-light btn-lg rounded-0 mx-2 mb-3" type="button" data-toggle="collapse" data-target="#legacySearch">
+                            Recherche primitive
+                        </button>
+                    </div>
+                    {# TODO  Ajouter la classe "collapse" aux div ci-dessous pour par défaut cacher le formulaire #}
+                    <div class="collapse" id="advancedSearch">
                         <div class="card card-body">
                             {{ render(controller('App\\Controller\\SearchController::advancedSearch')) }}
+                        </div>
+                    </div>
+                    <div class="" id="legacySearch">
+                        <div class="card card-body">
+                            {{ render(controller('App\\Controller\\SearchController::legacySearch')) }}
                         </div>
                     </div>
                 </div>

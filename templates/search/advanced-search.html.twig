@@ -1,11 +1,45 @@
-<form>
+<form method="post" action="{{ path('advanced-search') }}">
     <div class="col">
         <div class="row">
-            <div class="input-group col col-md-6">
+            <div class="form-group col col-lg-6">
+                <label for="keywords" class="col-12 pl-0">Mots clés</label>
+                <input type="text" id="keywords" placeholder="maison, appartement, dijon, auxerre..." class="col-12 form-control form-control-lg">
+            </div>
+            <div class="form-group col col-lg-6">
+                <p class="col-12 pl-0">Quel type de logement désirez vous ?</p>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="studio" class="form-check-input" id="studio" value="studio">
+                    <label class="form-check-label" for="studio">Studio</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="t2" class="form-check-input" id="t2" value="t2">
+                    <label class="form-check-label" for="t2">T2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="t3" class="form-check-input" id="t3" value="t3">
+                    <label class="form-check-label" for="t3">T3</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="t4" class="form-check-input" id="t4" value="t4">
+                    <label class="form-check-label" for="t4">T4</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="t5" class="form-check-input" id="t5" value="t5">
+                    <label class="form-check-label" for="t5">T5</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" name="t6+" class="form-check-input" id="t6" value="t6">
+                    <label class="form-check-label" for="t6">T6+</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="input-group col col-lg-6">
                 <div class="input-group-prepend pl-0 col-12">
                     <label class="input-group-label" for="types">Vous êtes intéréssés par un(e)</label>
                 </div>
-                <select class="custom-select col-12" id="types">
+                <select name="form[type]" class="custom-select col-12" id="types">
                     <option value="all" selected>maison, appartement...</option>
                     {% for type in allTypes %}
                         <option value="{{ type.name }}">{{ type.name }}</option>
@@ -13,11 +47,11 @@
                 </select>
             </div>
 
-            <div class="input-group col col-md-6">
+            <div class="input-group col col-lg-6">
                 <div class="input-group-prepend pl-0 col-12">
-                    <label class="input-group-label" for="types">Vous voulez</label>
+                    <label class="input-group-label" for="status">Vous voulez</label>
                 </div>
-                <select class="custom-select col-12" id="types">
+                <select name="form[status]" class="custom-select col-12" id="status">
                     <option value="all" selected>acheter, louer...</option>
                     {% for status in allStatus %}
                         <option value="{{ status.name }}">{{ status.name }}</option>
@@ -27,15 +61,49 @@
         </div>
 
         <div class="row mt-4">
-            <div class="form-group col col-md-6">
-                <label for="priceControlRange">Votre budget</label>
+            <div class="form-group col col-lg-6">
+                <p class="row">Quel est votre budget?</p>
                 <div class="row">
-                    <input type="range" min="0" max="1000000" step="1" class="form-control-range custom-range col-7" id="priceControlRange">
-                    <input type="text" class="custom-control col-4 ml-3" id="priceControlRangeValue">
+                    <div class="form-group col col-lg-5 mx-3 pl-0">
+                        <label for="minPriceValue" class="row">Min</label>
+                        <input type="text" name="minPrice" class="row form-control form-control-lg" pattern="^\d*(\.{1}\d+)*€{0,1}$" id="minPriceValue">
+                    </div>
+
+                    <div class="form-group col col-lg-5 mx-3 pl-0 pl-xl-4">
+                        <label for="maxPriceValue" class="row">Max</label>
+                        <input type="text" name="maxPrice" class="row form-control form-control-lg" pattern="^\d*(\.{1}\d+)*€{0,1}$" id="maxPriceValue">
+                    </div>
+                </div>
+                <div class="row px-2">
+                    <div id="priceSlider" class="col"></div>
+                </div>
+            </div>
+
+            <div class="form-group col col-lg-6">
+                <p class="row">Combien d'espace avez-vous besoin ?</p>
+                <div class="row">
+                    <div class="form-group col col-lg-5 mx-3 pl-0">
+                        <label for="minAreaValue" class="row">Min</label>
+                        <input type="text" name="minArea" class="row form-control form-control-lg" pattern="^\d*(\.{1}\d+)*(m²){0,1}$" id="minAreaValue">
+                    </div>
+
+                    <div class="form-group col col-lg-5 mx-3 pl-0 pl-xl-4">
+                        <label for="maxAreaValue" class="row">Max</label>
+                        <input type="text" name="maxArea" class="row form-control form-control-lg" pattern="^\d*(\.{1}\d+)*(m²){0,1}$" id="maxAreaValue">
+                    </div>
+                </div>
+                <div class="row px-2">
+                    <div id="areaSlider" class="col"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-12 mt-5">{{ dump() }}</div>
+    <div class="row d-flex align-content-center justify-content-center mt-4">
+        <button type="submit" class="form-control btn btn-primary btn-lg rounded-0 mx-3">
+            <span>Trouvez le logement de mes rêves</span>
+            <ion-icon name="telescope-outline"></ion-icon>
+        </button>
+    </div>
+    {# <div class="col-12 mt-5">{{ dump() }}</div>#}
 </form>
