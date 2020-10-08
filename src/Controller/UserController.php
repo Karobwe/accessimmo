@@ -13,6 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserController extends AbstractController
 {
+    
+    /**
+     * @Route("/user", name="user_index")
+     */
+    public function index(UserRepository $users)
+    {
+        return $this->render('user/index.html.twig', [
+            'users' => $users->findAll(),
+        ]);
+    }
+    
     /**
      * Permet d'afficher et de traiter le formulaire de modification de profil
      * 
@@ -42,6 +53,7 @@ class UserController extends AbstractController
         return $this->render('user/profile.html.twig', [
             'from' => $form->createView()
         ]);
-    }
+
+    }    
 
 }

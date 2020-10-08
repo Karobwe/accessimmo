@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-12 mt-5">
+            <h1 class="text-center mt-3">Liste des utilisateurs</h1>
+                <div class="d-flex align-items-center">
+                    <table>
+                        <thead>
+                            <th scope="col" >Numéro d'utilisateur :</th>
+                            <th scope="col">Prénom :</th>
+                            <th scope="col">Nom :</th>
+                            <th scope="col">Adresse Email :</th>
+                            <th scope="col">Adresse :</th>
+                            <th scope="col" >Code postal :</th>
+                            <th scope="col">Villes :</th>
+                            <th scope="col" >Numéro de téléphone :</th>
+                            <th scope="col">Role :</th>
+                        </thead>
+                        <tbody>
+                            {# On boucle sur les utilisateurs #}
+                            {% for user in users %}
+                                <tr>
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user. firstname }}</td>
+                                    <td>{{ user. lastname }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.address }}</td>
+                                    <td>{{ user.zipCode }}</td>
+                                    <td>{{ user.city }}</td>
+                                    <td>{{ user.phone }}</td>
+                                    <td>
+                                        {# On boucle sur les rôles #}
+                                        {% for role in user.roles %}
+                                            {% if role == "ROLE_USER" %}
+                                                Utilisateur
+                                                {% elseif role == "ROLE_EDITOR" %}
+                                                Editeur
+                                            {% elseif role == "ROLE_ADMIN" %}
+                                                Administrateur
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                </tr>
+                                
+                            {% else %}
+                                <p>Aucun utilisateur inscrit</p>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            <
+
+{% endblock %}

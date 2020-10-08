@@ -48,6 +48,7 @@ class UserFixtures extends Fixture
         
                 // création d'utilisateurs pour remplir la BDD
                 for ($i=1; $i <= $this->NB_USERS; $i++) {
+                    
                     $user = new User();
                    
                     $user
@@ -66,7 +67,6 @@ class UserFixtures extends Fixture
                     $users[] = $user;
                 }
 
-        
                 $manager->flush();
     }
 
